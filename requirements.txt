@@ -4,3 +4,5 @@ Flask-JWT
 Flask-Restful
 flask-login
 openai
+flask-sslify
+requests
