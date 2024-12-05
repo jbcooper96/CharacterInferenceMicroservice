@@ -6,7 +6,7 @@ from enums.inference_agent import Inference_Agent
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-environment = os.environ["ENVIRONMENT_NAME"]
+environment = os.environ.get("ENVIRONMENT_NAME", "DEV")
 is_dev = environment == "DEV"
 
 app = Flask(__name__)
@@ -14,9 +14,9 @@ if is_dev:
     app.config['SQLALCHEMY_DATABASE_URI'] =\
             'sqlite:///' + os.path.join(basedir, 'database.db')
 else:
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ["DATABASE_STRING"]
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_STRING")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config["SECRET_KEY"] = os.environ["SECRET_KEY"]
+app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "123")
 
 db = SQLAlchemy(app)
 
