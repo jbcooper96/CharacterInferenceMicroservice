@@ -1,0 +1,6 @@
+flask
+Flask-SQLAlchemy
+Flask-JWT
+Flask-Restful
+flask-login
+openai
