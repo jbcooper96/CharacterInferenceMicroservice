@@ -1,0 +1,1 @@
+This repository contains a lightweight Flask microservice designed to act as middleware for handling inference calls in a character-driven LLM system. The microservice facilitates seamless communication between clients and the underlying language model by providing a centralized interface for managing requests and custom character prompts.
