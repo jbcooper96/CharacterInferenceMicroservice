@@ -2,14 +2,14 @@ from app import db
 from typing import List
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from flask_login import UserMixin
-from sqlalchemy import ForeignKey, DateTime, desc
+from sqlalchemy import ForeignKey, DateTime, desc, String
 import uuid
 from datetime import datetime
 
 class User(db.Model, UserMixin):
     id: Mapped[int] = mapped_column(primary_key=True)
-    username: Mapped[str] = mapped_column(unique=True)
-    password: Mapped[str]
+    username: Mapped[str] = mapped_column(String(50), unique=True)
+    password: Mapped[str] = mapped_column(String(50))
     devices: Mapped[List["Device"]] = relationship()
 
     @classmethod
@@ -22,7 +22,7 @@ class User(db.Model, UserMixin):
 
 class Person(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
-    name: Mapped[str] = mapped_column(unique=True)
+    name: Mapped[str] = mapped_column(String(50), unique=True)
     chats: Mapped[List["Chat"]] = relationship()
 
     @classmethod
@@ -43,8 +43,8 @@ class Person(db.Model):
 
 class Character(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
-    name: Mapped[str] = mapped_column(unique=True)
-    prompt: Mapped[str]
+    name: Mapped[str] = mapped_column(String(50), unique=True)
+    prompt: Mapped[str] = mapped_column(String(1000))
     chats: Mapped[List["Chat"]] = relationship()
 
     @classmethod
@@ -65,8 +65,8 @@ class Character(db.Model):
 
 class Chat(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
-    text: Mapped[str]
-    response: Mapped[str]
+    text: Mapped[str] = mapped_column(String(2000))
+    response: Mapped[str] = mapped_column(String(2000))
     token_count: Mapped[int]
     person: Mapped[int] = mapped_column(ForeignKey("person.id"))
     character: Mapped[int] = mapped_column(ForeignKey("character.id"))
@@ -87,8 +87,8 @@ class Chat(db.Model):
 
 class Device(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
-    device_name: Mapped[str]
-    device_key: Mapped[str]
+    device_name: Mapped[str] = mapped_column(String(50))
+    device_key: Mapped[str] = mapped_column(String(50))
     user: Mapped[int] = mapped_column(ForeignKey("user.id"))
 
     def __init__(self, device_name, user_id, device_key=None):
